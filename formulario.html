@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registro de Eventos</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome para iconos -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Estilos personalizados para darle un toque original */
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px 0;
+        }
+        .form-container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            padding: 40px;
+            margin: 20px auto;
+            max-width: 800px;
+        }
+        .section-title {
+            color: #667eea;
+            font-weight: bold;
+            margin-top: 30px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 10px;
+        }
+        .section-title:first-of-type {
+            margin-top: 0;
+        }
+        .main-title {
+            text-align: center;
+            color: #764ba2;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .btn-submit {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            padding: 12px 40px;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        .btn-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+        .form-label {
+            font-weight: 600;
+            color: #333;
+        }
+        .icon-input {
+            position: relative;
+        }
+        .icon-input i {
+            position: absolute;
+            left: 10px;
+            top: 38px;
+            color: #667eea;
+        }
+        .icon-input input, .icon-input select, .icon-input textarea {
+            padding-left: 35px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <!-- Título principal -->
+            <h1 class="main-title">
+                <i class="fas fa-calendar-check"></i> Registro de Asistentes al Evento
+            </h1>
+
+
+            <!-- Formulario principal -->
+            <form action="procesar_evento.php" method="POST" enctype="multipart/form-data" class="needs-validation" novalidate>
+                
+                <!-- SECCIÓN 1: Información Personal -->
+                <h3 class="section-title">
+                    <i class="fas fa-user"></i> Información Personal
+                </h3>
+                
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="nombre" class="form-label">Nombre Completo *</label>
+                        <div class="icon-input">
+                            <i class="fas fa-user"></i>
+                            <input type="text" class="form-control" id="nombre" name="nombre" required>
+                            <div class="invalid-feedback">
+                                Por favor, ingresa tu nombre completo.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <label for="email" class="form-label">Correo Electrónico *</label>
+                        <div class="icon-input">
+                            <i class="fas fa-envelope"></i>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                            <div class="invalid-feedback">
+                                Por favor, ingresa un correo válido.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="telefono" class="form-label">Número de Teléfono *</label>
+                        <div class="icon-input">
+                            <i class="fas fa-phone"></i>
+                            <input type="tel" class="form-control" id="telefono" name="telefono" pattern="[0-9]{9}" required>
+                            <div class="invalid-feedback">
+                                Por favor, ingresa un teléfono válido (9 dígitos).
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <label for="fecha_nacimiento" class="form-label">Fecha de Nacimiento *</label>
+                        <div class="icon-input">
+                            <i class="fas fa-calendar"></i>
+                            <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento" required>
+                            <div class="invalid-feedback">
+                                Por favor, selecciona tu fecha de nacimiento.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Género *</label>
+                    <div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="genero" id="masculino" value="Masculino" required>
+                            <label class="form-check-label" for="masculino">
+                                <i class="fas fa-mars"></i> Masculino
+                            </label>
+                        </div>
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="radio" name="genero" id="femenino" value="Femenino" required>
+                            <label class="form-check-label" for="femenino">
+                                <i class="fas fa-venus"></i> Femenino
+                            </label>
+                        </div>
+                        <div class="invalid-feedback d-block" id="genero-error" style="display:none !important;">
+                            Por favor, selecciona tu género.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN 2: Información del Evento -->
+                <h3 class="section-title">
+                    <i class="fas fa-ticket-alt"></i> Información del Evento
+                </h3>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="fecha_evento" class="form-label">Fecha del Evento *</label>
+                        <div class="icon-input">
+                            <i class="fas fa-calendar-day"></i>
+                            <input type="date" class="form-control" id="fecha_evento" name="fecha_evento" required>
+                            <div class="invalid-feedback">
+                                Por favor, selecciona la fecha del evento.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <label for="tipo_entrada" class="form-label">Tipo de Entrada *</label>
+                        <div class="icon-input">
+                            <i class="fas fa-star"></i>
+                            <select class="form-control" id="tipo_entrada" name="tipo_entrada" required>
+                                <option value="">Selecciona una opción...</option>
+                                <option value="General">General</option>
+                                <option value="VIP">VIP</option>
+                                <option value="Estudiante">Estudiante</option>
+                            </select>
+                            <div class="invalid-feedback">
+                                Por favor, selecciona un tipo de entrada.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Preferencias de Comida</label>
+                    <div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="comida[]" value="Vegetariano" id="vegetariano">
+                            <label class="form-check-label" for="vegetariano">
+                                <i class="fas fa-leaf"></i> Vegetariano
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="comida[]" value="Vegano" id="vegano">
+                            <label class="form-check-label" for="vegano">
+                                <i class="fas fa-seedling"></i> Vegano
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="comida[]" value="Sin gluten" id="sin_gluten">
+                            <label class="form-check-label" for="sin_gluten">
+                                <i class="fas fa-bread-slice"></i> Sin gluten
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" name="comida[]" value="Sin preferencias" id="sin_preferencias">
+                            <label class="form-check-label" for="sin_preferencias">
+                                <i class="fas fa-utensils"></i> Sin preferencias
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN 3: Información de Acceso -->
+                <h3 class="section-title">
+                    <i class="fas fa-lock"></i> Información de Acceso
+                </h3>
+
+                <div class="mb-3">
+                    <label for="username" class="form-label">Nombre de Usuario *</label>
+                    <div class="icon-input">
+                        <i class="fas fa-user-circle"></i>
+                        <input type="text" class="form-control" id="username" name="username" required>
+                        <div class="invalid-feedback">
+                            Por favor, ingresa un nombre de usuario.
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="password" class="form-label">Contraseña *</label>
+                        <div class="icon-input">
+                            <i class="fas fa-key"></i>
+                            <input type="password" class="form-control" id="password" name="password" minlength="6" required>
+                            <div class="invalid-feedback">
+                                La contraseña debe tener al menos 6 caracteres.
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6 mb-3">
+                        <label for="confirm_password" class="form-label">Confirmar Contraseña *</label>
+                        <div class="icon-input">
+                            <i class="fas fa-key"></i>
+                            <input type="password" class="form-control" id="confirm_password" name="confirm_password" required>
+                            <div class="invalid-feedback">
+                                Las contraseñas no coinciden.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN 4: Preferencias de Contacto -->
+                <h3 class="section-title">
+                    <i class="fas fa-bell"></i> Preferencias de Contacto
+                </h3>
+
+                <div class="mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="notificaciones" value="Si" id="notificaciones">
+                        <label class="form-check-label" for="notificaciones">
+                            <i class="fas fa-envelope-open-text"></i> Deseo recibir notificaciones por correo electrónico
+                        </label>
+                    </div>
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="terminos" value="Aceptado" id="terminos" required>
+                        <label class="form-check-label" for="terminos">
+                            <i class="fas fa-file-contract"></i> Acepto los términos y condiciones *
+                        </label>
+                        <div class="invalid-feedback">
+                            Debes aceptar los términos y condiciones.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN 5: Encuesta Adicional -->
+                <h3 class="section-title">
+                    <i class="fas fa-poll"></i> Encuesta Adicional
+                </h3>
+
+                <div class="mb-3">
+                    <label for="calificacion" class="form-label">
+                        Calificación de eventos anteriores: <span id="valor_calificacion">5</span>/10
+                    </label>
+                    <input type="range" class="form-range" min="1" max="10" value="5" id="calificacion" name="calificacion" oninput="document.getElementById('valor_calificacion').textContent = this.value">
+                </div>
+
+                <div class="mb-3">
+                    <label for="comentarios" class="form-label">Comentarios Adicionales</label>
+                    <textarea class="form-control" id="comentarios" name="comentarios" rows="4" placeholder="Comparte tus comentarios, sugerencias o preguntas..."></textarea>
+                </div>
+
+                <!-- SECCIÓN 6: Adjuntar Archivo -->
+                <h3 class="section-title">
+                    <i class="fas fa-paperclip"></i> Documentación
+                </h3>
+
+                <div class="mb-3">
+                    <label for="archivo" class="form-label">Adjuntar Archivo (opcional)</label>
+                    <input type="file" class="form-control" id="archivo" name="archivo" accept=".pdf,.jpg,.jpeg,.png,.doc,.docx">
+                    <div class="form-text">Formatos aceptados: PDF, JPG, PNG, DOC, DOCX (Máx. 5MB)</div>
+                </div>
+
+                <!-- Botón de envío -->
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary btn-submit">
+                        <i class="fas fa-paper-plane"></i> Registrarse al Evento
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS y validación personalizada -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Validación del formulario con Bootstrap
+        (function() {
+            'use strict';
+            
+            // Obtener el formulario
+            var form = document.querySelector('.needs-validation');
+            
+            // Validación personalizada para las contraseñas
+            var password = document.getElementById('password');
+            var confirmPassword = document.getElementById('confirm_password');
+            
+            // Función para validar que las contraseñas coincidan
+            function validarPassword() {
+                if (password.value !== confirmPassword.value) {
+                    confirmPassword.setCustomValidity("Las contraseñas no coinciden");
+                } else {
+                    confirmPassword.setCustomValidity("");
+                }
+            }
+            
+            // Eventos para validar contraseñas
+            password.addEventListener('change', validarPassword);
+            confirmPassword.addEventListener('keyup', validarPassword);
+            
+            // Validación al enviar el formulario
+            form.addEventListener('submit', function(event) {
+                validarPassword();
+                
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                
+                form.classList.add('was-validated');
+            }, false);
+        })();
+    </script>
+</body>
+</html>
